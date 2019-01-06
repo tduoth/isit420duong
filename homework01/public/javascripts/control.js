@@ -28,7 +28,7 @@ var Orders = (function () {
             }
         }
         else{
-            alert(displayOrder);
+            alert('Your Order');
         }
     }
 
