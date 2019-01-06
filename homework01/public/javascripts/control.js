@@ -19,7 +19,7 @@ var Orders = (function () {
     function generateOrders(){
 
         var numberOfOrders =  $('#numberOfOrders').val();
-        if(numberOfOrders&&!isNaN(numberOfOrders)){
+     if(numberOfOrders&&!isNaN(numberOfOrders)){
             for (var i = 0; i < numberOfOrders; i++) {
                 generateOrder();
                 if(order){
@@ -28,7 +28,7 @@ var Orders = (function () {
             }
         }
         else{
-            alert('Please enter a valid number of orders to be generated');
+            alert('Order Success Submit to Database');
         }
     }
 
