@@ -1,0 +1,24 @@
+{
+  "storeInfo": [
+    { "zipCode": "98053",
+      "salesPersonsIds": [1, 2, 3, 4]
+    },
+    { "zipCode": "98007",
+      "salesPersonsIds": [5, 6, 7, 8]
+    },
+    { "zipCode": "98077",
+      "salesPersonsIds": [9, 10, 11, 12]
+    },
+    { "zipCode": "98055",
+      "salesPersonsIds": [13, 14, 15, 16]
+    },
+    { "zipCode": "98011",
+      "salesPersonsIds": [17, 18, 19, 20]
+    },
+    { "zipCode": "98046",
+      "salesPersonsIds": [21, 22, 23, 24]
+    }],
+  "itemNumbers" : ["123456", "123654", "321456", "321654", "654123", "654321", "543216", "354126", "621453", "623451"],
+  "itemMaxPrice": 15,
+  "itemMinPrice":5
+}
