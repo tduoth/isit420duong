@@ -28,7 +28,7 @@ var Orders = (function () {
             }
         }
         else{
-            alert('Order Success Submit to Database');
+            alert(displayOrder);
         }
     }
 
