@@ -1,137 +1,83 @@
-var Orders = (function () {
-    'use strict';
-    var data = null;
-    var order = null;
+var generateOrders = function(){
 
-    // constructor
-    function Orders() {
-        $('#ordersButton').click(generateOrders);
-        $('#generateOrder').click(generateOrderHandler);
-        $('#saveOrder').click(saveOrderToDb);
-    }
+    var newSeconds;
+    var d = new Date(); // for now
+    var hours = d.getHours(); // => 9
+    var minutes = d.getMinutes();
+    var currentSeconds = d.getSeconds();
 
-    Orders.prototype.importData = function () {
-        $.getJSON('data.json', function (result) {
-            data = result;
-        });
-    };
+    function createOrder(){
 
-    function generateOrders(){
+    var orders = null;
+    var stores = [98053, 98007, 98077, 98055, 98011, 98046];
+    var itemNumbers = [123456, 123654, 321456, 321654, 654123, 654321, 543216, 354126, 621453, 623451];
 
-        var numberOfOrders =  $('#numberOfOrders').val();
-        if(numberOfOrders&&!isNaN(numberOfOrders)){
-            for (var i = 0; i < numberOfOrders; i++) {
-                generateOrder();
-                if(order){
-                    saveOrderToDb();
-                }
+
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        newSeconds = currentSeconds + randomInt(2, 120);
+
+        if (newSeconds >= 59){
+            newSeconds = newSeconds - 59;
+            minutes = minutes + 1;
+            if (newSeconds >= 59){
+                newSeconds = newSeconds - 59;
+                minutes = minutes + 1
             }
         }
-        else{
-            alert('Please enter a valid number of orders to be generated');
+        if (minutes >=59){
+            minutes = 0;
+            hours = hours + 1;
         }
+        if (hours >= 12){
+            hours = 1;
+        }
+
+        orders = {
+            storeNumber: stores[randomInt(0, 5)],
+            salesPersonID: randomInt(1, 24),
+            itemNumber: itemNumbers[randomInt(0, 9)],
+            timePurch: hours + ':' + minutes + ':' + newSeconds,
+            pricePaid: randomInt(5, 15)
+
+        };
+        return orders;
     }
+        var oneOrder = createOrder();
+        console.log('store number: ' + oneOrder.storeNumber);
+        $('#textBoxStore').val(oneOrder.storeNumber);
+        $('#textBoxPerson').val(oneOrder.salesPersonID);
+        $('#textBoxItem').val(oneOrder.itemNumber);
+        $('#textBoxTime').val(oneOrder.timePurch);
+        $('#textBoxPrice').val(oneOrder.pricePaid);
 
-    function generateOrderHandler() {
-        generateOrder();
-        displayOrder();
-    }
-
-    function generateOrder() {
-
-        var storeNumber = null;
-        var salesPersonId = null;
-        var itemNumber = null;
-        var pricePaid = null;
-        var timePunch = null;
-
-        //var order = null;
-
-        if (data.hasOwnProperty('storeInfo') && data.hasOwnProperty('itemNumbers') &&
-            data.hasOwnProperty('itemMaxPrice') && data.hasOwnProperty('itemMinPrice')) {
-
-            var storeInfo = generateNumber(data['storeInfo']);
-            if (storeInfo.hasOwnProperty('zipCode')) {
-                storeNumber = storeInfo['zipCode'];
-                salesPersonId = generateNumber(storeInfo['salesPersonsIds']);
+ $('#submitOneOrder').click(function() {
+                $.post("/addorder", oneOrder, function (result) {
+                    checkResult(result);
+                })
             }
-            itemNumber = generateNumber(data['itemNumbers']);
-            pricePaid = Math.floor(Math.random() * ((data['itemMaxPrice'] - data['itemMinPrice']) + 1)) + data['itemMinPrice'];
-            timePunch = generateRandomTime();
+        );
+$('#submitOrders').click(function() {
+            for (var i = 0; i < 450; i++) {
+                var order = createOrder();
+                $.post("/addorder", order, function (result) {
+                    checkResult(result);
 
-            order = {
-                storeNumber: storeNumber,
-                salesPersonId: salesPersonId,
-                itemNumber: itemNumber,
-                pricePaid: pricePaid,
-                timePunch: timePunch
-            };
-        }
-        return order;
-    }
-
-    function saveOrderToDb() {
-        $.post('/insertOrder', order, function (result) {
-            console.log(order);
-            showOrderStatus(result);
-        }, 'json').done(function() {
-            console.log('Done saving to database');
-        }).fail(function(jqxhr, textStatus, error) {
-            console.log('error: ' + jqxhr.status + ' ' + textStatus + ' ' + error);
-        });
-    }
-
-    function displayOrder() {
-
-        if (order) {
-            for (var property in order) {
-                if (order.hasOwnProperty(property)) {
-                    var controlId = '#' + property;
-                    $(controlId).val(order[property]);
-                }
+                })
             }
         }
-    }
+    );
 
-    function generateNumber(array) {
-        var random = Math.floor(Math.random() * array.length);
-        return array[random];
-    }
-
-    function generateRandomTime() {
-        var minSeconds = 2;
-        var maxSeconds = 120;
-        var randomSeconds = Math.floor(Math.random() * ((maxSeconds - minSeconds) + 1)) + minSeconds;
-
-        var currentdate = new Date();
-        currentdate.setSeconds(currentdate.getSeconds() + randomSeconds);
-
-        var timePunch = currentdate.getDate() + "/"
-            + (currentdate.getMonth() + 1) + "/"
-            + currentdate.getFullYear() + " @ "
-            + currentdate.getHours() + ":"
-            + currentdate.getMinutes() + ":"
-            + currentdate.getSeconds();
-
-        return timePunch;
-    }
-
-    function showOrderStatus(result) {
-
-        if (result.result == 'success') {
-            $('#ordersPlacementStatus').html('Order(s) saved successfully');
-        }
-        else {
-            $('#ordersPlacementStatus').html('Order(s) failed to save to the database');
+        function checkResult(result) {
+            $("#status").html(result.result);
         }
     };
 
-    return Orders;
-}());
+$(document).ready(function() { 'use strict';
 
-$(document).ready(function () {
-    'use strict';
-    var myOrders = new Orders();
-    myOrders.importData();
+generateOrders();
 });
+
 

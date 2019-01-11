@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) { 'use strict';
-  res.render('index', { title: 'Thanh & Sean OrdersApp' });
+  res.render('index', { title: "Thanh & Sean Orders"});
 });
 
 router.get('/orders', function(req, res) {
@@ -42,10 +42,7 @@ router.post('/addorder', function(req, res) {
                     result: 'There was a problem inserting a record into the database'
                 });}
             else {
-                // And forward to success page
-                /*res.send({
-                    'Result': 'Success'
-                });*/
+        
                 res.send({
                     result: 'success'
                 });

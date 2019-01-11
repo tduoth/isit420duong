@@ -1,35 +1,24 @@
 extends layout
 
 block content
+  
+  h1 Welcome to #{title}
 
-    div#order
-        h4 Welcome to #{title}
-        hr
-        label(for='storeNumber') Store Number
-        input#storeNumber(type="text", name='storeNumber')
-        br
-        label(for='salesPersonId') Salesperson Id
-        input#salesPersonId(type="text", name ='salesPersonId')
-        br
-        label(for='itemNumber') Item Number
-        input#itemNumber(type="text", name ='itemNumber')
-        br
-        label(for='pricePaid') Price Paid $
-        input#pricePaid(type="text", name='pricePaid')
-        br
-        label(for='timePunch') Time Punch
-        input#timePunch(type="text", name ='timePunch')
-        br
-        br
-        button#generateOrder Generate Order
-        button#saveOrder Save Order
-        hr
-        label(for='numberOfOrders') Orders #
-        input#numberOfOrders(type="text", name='numberOfOrders')
-        br
-        br
-        button#ordersButton Place Orders
-        br
-        hr
-        p#ordersPlacementStatus
-
+  div.form-group
+    label(for='storeNumber') Store Number
+    input.form-control(type='text')#textBoxStore
+  div.form-group
+    label(for='salePersonId') Sale Person ID
+    input.form-control(type='text')#textBoxPerson
+  div.form-group
+    label(for='itemNumber') Item Number
+    input.form-control(type='text')#textBoxItem
+  div.form-group
+    label(for='pricePaid') Price Paid
+    input.form-control(type='text')#textBoxTime
+  div.form-group
+    label(for='timePunch') Time Punch
+    input.form-control(type='text')#textBoxPrice
+  button#submitOneOrder Generate Order
+  button#submitOrders Submit 450 Order(s)
+  pre#status
