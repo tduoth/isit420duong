@@ -4,6 +4,14 @@ block content
   
   h1 Welcome to #{title}
 
+  h2 Item List
+    #itemList
+      table
+        thead
+          th ItemNumber
+          th StoreNumber
+        tbody
+
   div.form-group
     label(for='storeNumber') Store Number
     input.form-control(type='text')#textBoxStore
@@ -21,4 +29,15 @@ block content
     input.form-control(type='text')#textBoxPrice
   button#submitOneOrder Generate Order
   button#submitOrders Submit 450 Order(s)
+  button#readAllOrders Read all Orders
+
+   
+    h2 Item List
+    #itemList
+      table
+        thead
+          th ItemNumber
+          th StoreNumber
+        tbody
+
   pre#status

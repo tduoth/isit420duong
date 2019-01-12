@@ -1,3 +1,5 @@
+var itemListData = [];
+
 var generateOrders = function(){
 
     var newSeconds;
@@ -75,9 +77,34 @@ $('#submitOrders').click(function() {
         }
     };
 
+    function populateTable() {
+
+        // Empty content string
+        var tableContent = '';
+      
+        // jQuery AJAX call for JSON
+        $.getJSON( '/orders', function( data ) {
+      
+        // Put our user data array into a userlist variable in the global object
+        itemListData = data;
+      
+          // For each item in our JSON, add a table row and cells to the content string
+          $.each(data, function(){
+            tableContent += '<tr>';
+            tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.itemNumber + '">' + this.itemNumber + '</a></td>';
+            tableContent += '<td>' + this.storeNumber + '</td>';
+            tableContent += '</tr>';
+          });
+      
+          // Inject the whole content string into our existing HTML table
+          $('#itemList table tbody').html(tableContent);
+        });
+      };
+
 $(document).ready(function() { 'use strict';
 
 generateOrders();
+populateTable();
 });
 
 
