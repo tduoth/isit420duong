@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) { 'use strict';
   res.render('index', { title: "Thanh & Sean Orders"});
 });
 
-router.get('/orders', function(req, res) {
+/* router.get('/orders', function(req, res) {
     var db = req.db;
     var collection = db.get('Usercollection');
     collection.find({},{},function(e,docs){
@@ -14,7 +14,15 @@ router.get('/orders', function(req, res) {
             "orders" : docs
         });
     });
-});
+}); */
+
+router.get('/orders', function(req, res) {
+    var db = req.db;
+    var collection = db.get('itemlist');
+    collection.find({},{},function(e,docs){
+      res.json(docs);
+    });
+  });
 
 var count = 0;
 
@@ -26,7 +34,8 @@ router.post('/addorder', function(req, res) {
     // Get our form values. These rely on the "name" attributes
 
     // Set our collection
-    var collection = db.get('Usercollection');
+    //var collection = db.get('Usercollection');
+    var collection = db.get('itemlist');
 
         // Submit to the DB
         collection.insert({

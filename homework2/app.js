@@ -8,7 +8,8 @@ var bodyParser = require('body-parser');
 // New Code for mongo
 var mongodb = require('mongodb');
 var monk = require('monk');
-var db = monk('mongodb://bcuser:password1@ds054308.mlab.com:54308/ordersdb');
+var db = monk('mongodb://seannewmanmongo:isit420@ds064799.mlab.com:64799/isit420orders');
+//var db = monk('mongodb://bcuser:password1@ds054308.mlab.com:54308/ordersdb');
 
 var index = require('./routes/index');
 var users = require('./routes/users');

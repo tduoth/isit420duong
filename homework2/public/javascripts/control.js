@@ -93,6 +93,7 @@ $('#submitOrders').click(function() {
             tableContent += '<tr>';
             tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.itemNumber + '">' + this.itemNumber + '</a></td>';
             tableContent += '<td>' + this.storeNumber + '</td>';
+            tableContent += '<td>' + this.timePurch + '</td>';
             tableContent += '</tr>';
           });
       
