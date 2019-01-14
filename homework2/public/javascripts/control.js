@@ -104,8 +104,12 @@ $('#submitOrders').click(function() {
 
 $(document).ready(function() { 'use strict';
 
-generateOrders();
-populateTable();
+    generateOrders();
+    populateTable();
+
+    $('#refreshOrders').click(function() {
+        populateTable();
+    });
 });
 
 
